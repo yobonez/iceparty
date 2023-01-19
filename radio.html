@@ -2,31 +2,41 @@
 <html>
     <head>
         <link rel="stylesheet" href="css/styles.css">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-        <script src="js/player.js"></script>
+        <link rel="stylesheet" href="css/google-material-icons.css">
+        <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self'; script-src-elem 'self';"/>
     </head>
     <body>
+        <!--<video autoplay muted loop id="background-video">
+
+        </video>
+        -->
         <div class="playerbox">
             <div class= "playerbox-body">
-                <h2 class="playerbox-title">yo_bonez's radio</h2>
+                <h2 class="playerbox-title">yo_bonez's radioooooooooooo</h2>
                 </h2>
                 <div class="playerbox-widget">
                     <div class="nowplaying">
                         <div class="albumart">
-                            <img src="img/cover.png"></img>
+                            <img src="img/loading.png"></img>
                         </div>
                         <div class="song-info">
-                            <h3 class="song-title">fdfsd</h3>
-                            <h4 class="song-author">gsdfghgd</h4>
+                            <h3 class="song-title">Loading...</h3>
+                            <h4 class="song-author"></h4>
                         </div>
                     </div>
                     <div class="controls">
+                        <audio id="player" src="/live"></audio>
                         <div class="play-button">
-                            <i class="material-icons" style="font-size:48px">play_circle</i>
+                            <button id="idplaybutton" class="material-icons">play_circle</button>
+                        </div>
+                        <div class="volume-control">
+                            <button id="idvolumebutton" class="material-icons">volume_up</button>
+                            <input type="range" id="idvolumeslider" max="100" value="100">
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </body>
+    <script src="js/player.js"></script>
 </html>
