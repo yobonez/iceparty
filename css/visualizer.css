@@ -1,0 +1,23 @@
+.visualizer-container {
+    position:absolute;
+
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.visualizer-bar {
+    background-color:white;
+    width: 4px;
+    margin: 2px;
+}
+
+h1{
+    position: absolute;
+    color :red;
+}

@@ -2,14 +2,16 @@
 <html>
     <head>
         <link rel="stylesheet" href="css/styles.css">
+        <link rel="stylesheet" href="css/visualizer.css">
         <link rel="stylesheet" href="css/google-material-icons.css">
         <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self'; script-src-elem 'self';"/>
     </head>
     <body>
-        <!--<video autoplay muted loop id="background-video">
-
-        </video>
-        -->
+        <div class="background">
+        </div>
+        <!--<h1>BEWARE: something is really wrong with volume now</h1>-->
+        <div class="visualizer-container">
+        </div>
         <div class="playerbox">
             <div class= "playerbox-body">
                 <h2 class="playerbox-title">yo_bonez's radioooooooooooo</h2>
@@ -29,6 +31,9 @@
                         <div class="play-button">
                             <button id="idplaybutton" class="material-icons">play_circle</button>
                         </div>
+                        <div class="wait-message">
+                            <p></p>
+                        </div>
                         <div class="volume-control">
                             <button id="idvolumebutton" class="material-icons">volume_up</button>
                             <input type="range" id="idvolumeslider" max="100" value="100">
@@ -39,4 +44,5 @@
         </div>
     </body>
     <script src="js/player.js"></script>
+    <script src="js/visualizer.js"></script>
 </html>

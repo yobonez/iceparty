@@ -3,13 +3,24 @@
 }
 
 body {
+    overflow: hidden;
+}
+
+.background {
+    position:absolute;
+
+    top: -50px;
+    bottom: -50px;
+    right: -50px;
+    left: -50px;
+
     background-size: cover;
     background-repeat: no-repeat;
-    background-position: center;
-    overflow: hidden;
-    width: 100vw;
-    height: 100vh;
+    background-position: center center;
+
+    filter:blur(8px);
 }
+
 
 img {
     border-radius: 3px;
@@ -74,6 +85,12 @@ img {
     text-align: center;
     
     /*background-color: inherit;*/
+}
+
+.wait-message {
+    position:relative;
+    left: -15%;
+    top: -3px;
 }
 
 button {
