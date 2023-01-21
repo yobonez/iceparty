@@ -7,21 +7,34 @@ document.addEventListener("DOMContentLoaded", function(event) {
     var wait_message = document.querySelector(".wait-message p");
     var volumeslider = document.getElementById("idvolumeslider");
     
+    function correct_mountpoint(mountpoint) {
+        if (mountpoint.listenurl.endsWith("/live")) {
+            return true;
+        }
+        return false;
+    }
+
     function refresh_radio()
     {
+        
         fetch('/status-json.xsl')
         .then(response => response.json())
         .then(data => {
+            let author_title_arr = undefined;
             // case for multiple icecast mountpoints
-            // if (Array.isArray(data.icestats.source))
-            // {
-            //     for (let i = 0; i < mountpoints.length; i++)
-            //     {
-                    
-            //     }
-            // }
+            if (Array.isArray(data.icestats.source))
+            {
+                let mountpoints = data.icestats.source;
+                for (let i = 0; i < mountpoints.length; i++)
+                {
+                    if (!correct_mountpoint(mountpoints[i])) { continue; }
+                    author_title_arr = mountpoints[i].title.split("-");
+                }
+            }
+            else {
+                author_title_arr = data.icestats.source.title.split("-");
+            }
 
-            let author_title_arr = data.icestats.source.title.split("-");
 
             // let's ignore the fact that there may be some artists with dashes in their nicknames 
             let author = author_title_arr[0];
