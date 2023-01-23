@@ -27,9 +27,11 @@ document.addEventListener("DOMContentLoaded", function(_) {
         
         audio_source.connect(biquad_filter);
         biquad_filter.connect(gain_filter);
+
         gain_filter.connect(actx.destination);
         
-
+        analyser.connect(biquad_filter);
+        
         biquad_filter.frequency.setValueAtTime(0, actx.currentTime);
         gain_filter.gain.setValueAtTime(0, actx.currentTime);
         //analyser.connect(actx.destination);
@@ -43,7 +45,7 @@ document.addEventListener("DOMContentLoaded", function(_) {
         if (is_bassboost)
         {
             biquad_filter.frequency.setValueAtTime(100, actx.currentTime);
-            gain_filter.gain.setValueAtTime(0.7, actx.currentTime);
+            gain_filter.gain.setValueAtTime(1, actx.currentTime);
             biquad_filter.Q.value = 5;
         }
         else {
@@ -95,7 +97,6 @@ document.addEventListener("DOMContentLoaded", function(_) {
     }
 
     function run() {
-        //const screen_height = window.screen.height;
         const visualizer_container = document.querySelector(".visualizer-container");
     
         // 1920px / 8px = 240 bars

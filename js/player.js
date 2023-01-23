@@ -1,3 +1,20 @@
+var player_first_run = true;
+var short_listenurl = "";
+
+function change_radio_src()
+{ 
+    if (arguments.length == 0)
+    {
+        let audio = document.getElementById("player");
+        audio.src = "/" + short_listenurl;
+        player_first_run = false; 
+    }
+    else {
+        let audio = document.getElementById("player");
+        audio.src = "/" + arguments[0];
+    }
+}
+
 document.addEventListener("DOMContentLoaded", function(event) {
     var song_title = document.querySelector(".song-title");
     var song_author = document.querySelector(".song-author");
@@ -7,71 +24,69 @@ document.addEventListener("DOMContentLoaded", function(event) {
     var wait_message = document.querySelector(".wait-message p");
     var volumeslider = document.getElementById("idvolumeslider");
     
-    function correct_mountpoint(mountpoint) {
-        if (mountpoint.listenurl.endsWith("/live")) {
-            return true;
-        }
-        return false;
-    }
 
-    function refresh_radio()
+    function load_cover()
     {
-        
-        fetch('/status-json.xsl')
-        .then(response => response.json())
-        .then(data => {
-            let author_title_arr = undefined;
-            // case for multiple icecast mountpoints
-            if (Array.isArray(data.icestats.source))
+        album_art.src = "img/cover-" + short_listenurl + ".png?refresh=" + new Date().getTime();
+        document.querySelector(".background").style = "background-image: url('img/cover-"+ short_listenurl +".png?refresh=" + new Date().getTime() + "');";
+    }
+    
+
+    async function refresh_radio()
+    {
+        let current_mountpoint;
+        let mountpoints = await fetch_mountpoints();
+        const selection = document.querySelector(".playerbox-selection-wrapper #selected-mountpoint");
+
+        if (player_first_run)
+        { current_mountpoint = mountpoints[0]; }
+        else if (selection)
+        { 
+            for(let i = 0; i < mountpoints.length; i++)
             {
-                let mountpoints = data.icestats.source;
-                for (let i = 0; i < mountpoints.length; i++)
+                let mountpoint_name = mountpoints[i].listenurl.split("/").at(-1);
+                if (selection.querySelector("h2").innerText == mountpoint_name)
                 {
-                    if (!correct_mountpoint(mountpoints[i])) { continue; }
-                    author_title_arr = mountpoints[i].title.split("-");
+                    current_mountpoint = mountpoints[i];
+                    short_listenurl = mountpoint_name;
                 }
             }
-            else {
-                author_title_arr = data.icestats.source.title.split("-");
-            }
+        }
+
+        short_listenurl = await current_mountpoint.listenurl.split("/").at(-1);
+
+        if (player_first_run)
+        { change_radio_src() }
 
 
-            // let's ignore the fact that there may be some artists with dashes in their nicknames 
-            let author = author_title_arr[0];
-            let title = "";
+        let author_title_arr = current_mountpoint.title.split("-");
 
-            for (let i = 1; i < author_title_arr.length; i++)
-            {
-                title += author_title_arr[i];
-            }
+        // let's ignore the fact that there may be some artists with dashes in their nicknames 
+        let author = author_title_arr[0];
+        let title = "";
 
-            if (song_title.innerHTML != title || song_author.innerHTML != author)
-            {
-                album_art.src = "img/cover.png?refresh=" + new Date().getTime();
-                document.querySelector(".background").style = "background-image: url('img/cover.png?refresh=" + new Date().getTime() + "');";
-            }
-            
-            song_author.innerHTML = author;
-            song_title.innerHTML = title;
-            playButton.style.cursor = "pointer";
-        })
-        .catch(_ => {
-            album_art.src = "img/error.png"
-            song_title.innerHTML = "Desired Icecast mountpoint or server is down.";
-            song_author.innerHTML = "Error";
-            playButton.style.pointer = "not-allowed";
-            }
-        )
+        for (let i = 1; i < author_title_arr.length; i++)
+        {
+            title += author_title_arr[i];
+        }
+
+        if (song_title.innerHTML != title.trim() || song_author.innerHTML != author.trim())
+        { load_cover(); set_selected_mountpoint(short_listenurl); }
+        if (!album_art.src.includes(short_listenurl))
+        { load_cover(); }
+
+        song_author.innerHTML = author.trim();
+        song_title.innerHTML = title.trim();
+        playButton.style.cursor = "pointer";
     }
 
     refresh_radio();
     setInterval(refresh_radio, 5000);
 
-
-    var audio = document.getElementById("player");
-    var audio_link = audio.src;
-
+    
     playButton.addEventListener('click', () => {
+        let audio = document.getElementById("player");
+        let audio_link = audio.src;
         let player_state = playButton.innerHTML;
         playButton.style.color = "gray";
 
@@ -80,7 +95,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
             audio.removeAttribute("src");
             audio.load();
 
-            audio.src = audio_link + "?refresh=" + new Date().getTime();
+            audio.src = audio_link.split("?")[0] + "?refresh=" + new Date().getTime();
             audio.play();
             player_state = 0;
         }

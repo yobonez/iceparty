@@ -2,6 +2,7 @@
 <html>
     <head>
         <link rel="stylesheet" href="css/styles.css">
+        <link rel="stylesheet" href="css/options.css">
         <link rel="stylesheet" href="css/visualizer.css">
         <link rel="stylesheet" href="css/google-material-icons.css">
         <meta charset="utf-8">
@@ -10,13 +11,27 @@
     <body>
         <div class="background">
         </div>
-        <!--<h1>BEWARE: experimenting with JS audio options right now</h1>-->
+        <h1>Working on mountpoint selection, things will break</h1>
         <div class="visualizer-container">
         </div>
         <div class="playerbox">
             <div class= "playerbox-body">
-                <h2 class="playerbox-title">yo_bonez's radioooooooooooo</h2>
-                </h2>
+                <!--<h2 class="playerbox-title">yo_bonez's radioooooooooooo</h2>
+                </h2>-->
+                <div class="playerbox-selection-wrapper">
+                    <span class="arrow"></span>
+                    <div class="dropdown-items">
+                        <!-- <div class="item" id="1">
+                            <h2>test option</h2>
+                        </div>
+                        <div class="item" id="2">
+                            <h2>test option2</h2>
+                        </div> -->
+                    </div>
+                    <!-- <div class="item" id="selected-mountpoint">
+                        <h2>No mountpoints available</h2>
+                    </div> -->
+                </div>
                 <div class="playerbox-widget">
                     <div class="nowplaying">
                         <div class="albumart">
@@ -28,7 +43,7 @@
                         </div>
                     </div>
                     <div class="controls">
-                        <audio id="player" src="/live"></audio>
+                        <audio id="player" src=""></audio> <!--TUTAJ-->
                         <div class="play-button">
                             <button id="idplaybutton" class="material-icons">play_circle</button>
                         </div>
@@ -51,5 +66,6 @@
         </div>
     </body>
     <script src="js/player.js"></script>
+    <script src="js/mountpoint-selection.js"></script>
     <script src="js/visualizer.js"></script>
 </html>

@@ -1,0 +1,129 @@
+/* Visual and audio options on the right side of website */
+.options {
+    position: absolute;
+    display: grid;
+    align-items: center;
+    justify-content: space-between;
+    background: gainsboro;
+    border-radius: 3px;
+    padding: 8px;
+    width: 150px;
+    left: 90%;
+    top: 4%;
+    box-shadow: 0 0 8px black;
+    
+    transition: opacity 0.5s;
+}
+
+.option-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: inherit;
+}
+
+.option-container input[type="checkbox"] {
+    position:relative;
+    appearance: none;
+
+    width: 40px;
+    height: 20px;
+
+    background-color: black;
+    border-radius: 20px;
+    transition: background .2s;
+}
+
+.option-container input[type="checkbox"]::after {
+    content: '';
+    position:absolute;
+
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+
+    top: 45%;
+    left: 28%;
+    transform: translate(-50%, -50%);
+
+
+    background-color: white;
+
+    transition: left .2s;
+}
+
+.option-container input[type="checkbox"]:checked {
+    background-color: red;
+}
+
+.option-container input[type="checkbox"]:checked::after {
+    left: 72%;
+}
+
+.playerbox-selection-wrapper {
+    width: 100%;
+    height: fit-content;
+
+    color: black;
+    z-index: 2;
+}
+
+.arrow {
+    position: absolute;
+    width: 0; 
+    height: 0; 
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid black;
+    left: 90%;
+    top: 14px;
+
+    pointer-events:none;
+}
+
+.item
+{
+    width: 100%;
+    height: fit-content;
+}
+
+.item:hover {
+    background-color: gray;
+}
+
+
+.playerbox-selection-wrapper .dropdown-items
+{
+    position: relative;
+    transition: opacity 0.5s;
+
+    display: none;
+    opacity: 0;
+
+    z-index: 10;
+}
+
+.playerbox-selection-wrapper h2 {
+    font-size:26px;
+    width: auto;
+    height: auto;
+
+    margin: 0;
+} 
+
+
+
+/* .playerbox-selection-wrapper label {
+    font-size:26px;
+    width: auto;
+    height: auto;
+
+    z-index: 1;
+} 
+*/
+
+
+/* .playerbox-selection-wrapper input[type="checkbox"] {
+    appearance: none;
+} */
+

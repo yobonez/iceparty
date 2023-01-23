@@ -50,16 +50,16 @@ img {
     margin:15px;
 }
 
-.playerbox-title {
+/* .playerbox-title {
     margin-top: 0;
-}
+} */
 
 .playerbox-widget {
     flex: 1 1 auto;
     position:relative;
     width: auto;
     /*background-color: rgb(62, 132, 238);*/
-    height:76%;
+    height:auto;
 }
 
 .playerbox-widget img {
@@ -78,11 +78,14 @@ img {
 }
 
 .controls {
-    padding-top: 10px;
+    padding-top: 1.5rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
     text-align: center;
+
+    width: auto;
+    height: 100%;   
     
     /*background-color: inherit;*/
 }
