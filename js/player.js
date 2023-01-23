@@ -1,6 +1,19 @@
 var player_first_run = true;
 var short_listenurl = "";
 
+
+function set_status_loading() 
+{
+    var song_title = document.querySelector(".song-title");
+    var song_author = document.querySelector(".song-author");
+    var album_art = document.querySelector(".albumart img");
+    //var playButton = document.getElementById("idplaybutton");
+
+    song_title.innerHTML = "Loading...";
+    song_author.innerHTML = "";
+    album_art.src = "img/loading.png";
+}
+
 function change_radio_src()
 { 
     if (arguments.length == 0)
@@ -19,12 +32,26 @@ document.addEventListener("DOMContentLoaded", function(event) {
     var song_title = document.querySelector(".song-title");
     var song_author = document.querySelector(".song-author");
     var album_art = document.querySelector(".albumart img");
-
+    
     var playButton = document.getElementById("idplaybutton");
     var wait_message = document.querySelector(".wait-message p");
     var volumeslider = document.getElementById("idvolumeslider");
     
-
+    var blink_handler = undefined;
+    var blink_counter = 0;
+    function blink_button() {
+        if (blink_counter == 0)
+        {
+            playButton.classList.add("blink");
+        }
+        else {
+            playButton.classList.remove("blink");
+            blink_counter = 0;
+            clearInterval(blink_handler);
+        }
+        blink_counter++;
+    }
+    
     function load_cover()
     {
         album_art.src = "img/cover-" + short_listenurl + ".png?refresh=" + new Date().getTime();
@@ -37,6 +64,13 @@ document.addEventListener("DOMContentLoaded", function(event) {
         let current_mountpoint;
         let mountpoints = await fetch_mountpoints();
         const selection = document.querySelector(".playerbox-selection-wrapper #selected-mountpoint");
+
+        if (mountpoints.length == 0)
+        {
+            song_title.innerHTML = "There are no icecast mountpoints, or icecast server is down."
+            song_author.innerHTML = "Error";
+            album_art.src = "img/error.png";
+        }
 
         if (player_first_run)
         { current_mountpoint = mountpoints[0]; }
@@ -114,6 +148,12 @@ document.addEventListener("DOMContentLoaded", function(event) {
     audio.onpause = (_) => {
         playButton.innerHTML = "play_circle";
         playButton.style.color = "black";
+    }
+
+    audio.onabort = (_) => {
+        playButton.innerHTML = "play_circle";
+        playButton.style.color = "black";
+        blink_handler = setInterval(blink_button, 500);
     }
 
     volumeslider.addEventListener("input", function() {

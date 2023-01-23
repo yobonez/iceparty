@@ -18,7 +18,7 @@ function show_list()
 
     selection_container.style.backgroundColor = "dimgrey";
 
-    arrow.style.top = "49px";
+    // arrow.style.top = "49px";
     arrow.style.borderBottom = "none";
     arrow.style.borderTop = "10px solid black";
 }
@@ -31,7 +31,7 @@ function hide_list()
 
     selection_container.style.backgroundColor = "inherit";
 
-    arrow.style.top = "14px";
+    // arrow.style.top = "14px";
     arrow.style.borderTop = "none";
     arrow.style.borderBottom = "10px solid black";
 }
@@ -43,7 +43,8 @@ function setup_list()
     current_selection.addEventListener('click', function(){
         if (!selectables_selecting_state)
         { show_list(); }
-        else { hide_list(); }
+        else 
+        { hide_list(); }
     })
 }
 
@@ -107,6 +108,7 @@ function set_selectable_mountpoints(mnt_name_omit, mountpoints)
         item.addEventListener('click', function () { 
             set_selected_mountpoint(item.querySelector("h2").innerText);
             change_radio_src(mountpoint_name);
+            set_status_loading();
         });
     }
 }
@@ -117,9 +119,13 @@ async function fetch_mountpoints()
 
     let icecast_status = await fetch("/status-json.xsl");
 
-    // todo
-    //if (icecast_status.status != 200)
+    if (icecast_status.status != 200)
+    { return available_mountpoints; }
+
     let data = await icecast_status.json();
+    if (!data.icestats.source)
+    { return available_mountpoints; }
+
     if (Array.isArray(data.icestats.source))
     {
         let mountpoints = await data.icestats.source;
