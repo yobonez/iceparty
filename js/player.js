@@ -28,6 +28,13 @@ function change_radio_src()
     }
 }
 
+function decode(str) {
+
+    let txt = document.createElement("textarea");
+    txt.innerHTML = str;
+    return txt.value;
+}
+
 document.addEventListener("DOMContentLoaded", function(event) {
     var song_title = document.querySelector(".song-title");
     var song_author = document.querySelector(".song-author");
@@ -96,12 +103,12 @@ document.addEventListener("DOMContentLoaded", function(event) {
         let author_title_arr = current_mountpoint.title.split("-");
 
         // let's ignore the fact that there may be some artists with dashes in their nicknames 
-        let author = author_title_arr[0];
+        let author = decode(author_title_arr[0]);
         let title = "";
 
         for (let i = 1; i < author_title_arr.length; i++)
         {
-            title += author_title_arr[i];
+            title += decode(author_title_arr[i]);
         }
 
         if (song_title.innerHTML != title.trim() || song_author.innerHTML != author.trim())
