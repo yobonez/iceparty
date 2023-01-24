@@ -29,9 +29,7 @@ img {
 .playerbox {
     width:500px;
     min-height:250px;
-    /*text-align: center;*/
     display:flex;
-    /*justify-content: center;*/
     background-color:gainsboro;
     box-shadow: 0 0 8px black;
     border-radius: 3px;
@@ -50,15 +48,11 @@ img {
     margin:15px;
 }
 
-/* .playerbox-title {
-    margin-top: 0;
-} */
 
 .playerbox-widget {
     flex: 1 1 auto;
     position:relative;
     width: auto;
-    /*background-color: rgb(62, 132, 238);*/
     height:auto;
 }
 
@@ -86,8 +80,6 @@ img {
 
     width: auto;
     height: 100%;   
-    
-    /*background-color: inherit;*/
 }
 
 .wait-message {
@@ -100,7 +92,6 @@ button {
     padding: 0;
     border: 0;
     background: inherit;
-    /*cursor: pointer;*/
     outline: none;
     transition: color 0.2s;
 }

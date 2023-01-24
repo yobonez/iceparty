@@ -1,5 +1,3 @@
-// var current_mountpoint = undefined; // przenieś do player.js
-
 var available_mountpoints = [];
 
 const selection_container = document.querySelector(".playerbox-selection-wrapper");
@@ -18,7 +16,6 @@ function show_list()
 
     selection_container.style.backgroundColor = "dimgrey";
 
-    // arrow.style.top = "49px";
     arrow.style.borderBottom = "none";
     arrow.style.borderTop = "10px solid black";
 }
@@ -31,12 +28,10 @@ function hide_list()
 
     selection_container.style.backgroundColor = "inherit";
 
-    // arrow.style.top = "14px";
     arrow.style.borderTop = "none";
     arrow.style.borderBottom = "10px solid black";
 }
 
-// this is getting messy
 function setup_list()
 {
     const current_selection = document.querySelector(".playerbox-selection-wrapper #selected-mountpoint");
@@ -47,13 +42,6 @@ function setup_list()
         { hide_list(); }
     })
 }
-
-// function to setup everything for selected mountpoint
-// function set_mountpoint()
-// {
-//     const audio_player = document.getElementById("player");
-//     audio_player.src = "/" + current_mountpoint;
-// }
 
 async function set_selected_mountpoint(mnt_name)
 {

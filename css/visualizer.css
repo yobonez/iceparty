@@ -13,11 +13,8 @@
 
 
 .visualizer-bar {
-    /*background-color:white;*/
-    /* transition: all 0.01s linear; */
     transition: border 0.2s linear;
     border: 1px solid black;
-    /* border-radius: 3px; */
     box-shadow: 0 0 8px black;
     width: 6px;
     margin: 2px;

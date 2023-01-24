@@ -1,5 +1,4 @@
 var first_run = true;
-//document.getElementsByTagName("html")[0].clientWidth;
 const screen_width = window.screen.width * window.devicePixelRatio;
 const options_tab = document.querySelector(".options");
 const audio = document.getElementById("player");
@@ -34,7 +33,6 @@ document.addEventListener("DOMContentLoaded", function(_) {
         
         biquad_filter.frequency.setValueAtTime(0, actx.currentTime);
         gain_filter.gain.setValueAtTime(0, actx.currentTime);
-        //analyser.connect(actx.destination);
         
         console.log(audio_source);
     }
@@ -61,7 +59,6 @@ document.addEventListener("DOMContentLoaded", function(_) {
         const freq_bin_count = analyser.frequencyBinCount;
         const factor = parseInt(freq_bin_count / bars_amount);
 
-        //TODO: biquad filter
         const freq_array = new Uint8Array(freq_bin_count);
         analyser.getByteFrequencyData(freq_array);
 
@@ -81,8 +78,6 @@ document.addEventListener("DOMContentLoaded", function(_) {
                 { single_bar.style.height = 2 + "px"; }
                 else {
                     single_bar.style.height = single_freq*2.5 + "px";
-                    //single_bar.style.color.r = single_freq;
-                    //single_bar.style.backgroundColor = "rgb(0,0," + single_freq + ")";
                 }
                 
                 if (single_freq > 200)
