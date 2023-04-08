@@ -14,14 +14,14 @@
 
 .visualizer-bar {
     transition: border 0.2s linear;
-    border: 1px solid black;
-    box-shadow: 0 0 8px black;
+    border: 1px solid gray;
+    box-shadow: 0 0 8px gray;
     width: 6px;
     margin: 2px;
     background-color: black;
 }
 
-h1{
+h1 {
     position: absolute;
     color :red;
 }

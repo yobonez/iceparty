@@ -77,7 +77,7 @@ document.addEventListener("DOMContentLoaded", function(_) {
                 if (single_freq < 2)
                 { single_bar.style.height = 2 + "px"; }
                 else {
-                    single_bar.style.height = single_freq*2.5 + "px";
+                    single_bar.style.height = single_freq*2.8 + "px";
                 }
                 
                 if (single_freq > 200)
