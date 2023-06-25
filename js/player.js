@@ -132,6 +132,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
         playButton.style.color = "gray";
 
         if (player_state == "play_circle") {
+            if (gain_filter != undefined) { gain_filter.gain.setValueAtTime(1, actx.currentTime); }
+
             wait_message.innerHTML = "Hold on...";
             audio.removeAttribute("src");
             audio.load();

@@ -15,24 +15,49 @@ document.addEventListener("DOMContentLoaded", function(_) {
     const playButton = document.getElementById("idplaybutton");
     const bassBoostButton = document.getElementById("bboost");
     
+    function ear_protector()
+    {
+        analyser.fftSize = 2048;
+        analyser.minDecibels = -90;
+
+        const buf_length = analyser.frequencyBinCount;
+        const fbc_array = new Uint8Array(buf_length);
+
+        analyser.getByteTimeDomainData(fbc_array);
+
+        const dataArray = new Uint8Array(fbc_array.buffer)
+
+        let freqBin_tooLoud = 0
+
+        for (let i = 0; i < buf_length; i++)
+        {
+            if (dataArray[i] >= 220) { freqBin_tooLoud++; }
+        }
+
+        if (freqBin_tooLoud > 50) { 
+            let newVol = gain_filter.gain.value /= 2.2;
+
+            gain_filter.gain.setValueAtTime(newVol, actx.currentTime);
+            console.log("This stream is too loud. Volume lowered by 60%. (Volume will be back at 100% upon restarting the stream)");
+        }
+    }
+
     function connect_nodes()
     {
         biquad_filter = actx.createBiquadFilter();
         gain_filter = actx.createGain();
         biquad_filter.type = "lowpass";
 
-        audio_source.connect(analyser);
+        audio_source.connect(gain_filter);
+        gain_filter.connect(analyser);
         analyser.connect(actx.destination);
         
-        audio_source.connect(biquad_filter);
-        biquad_filter.connect(gain_filter);
-
-        gain_filter.connect(actx.destination);
-        
-        analyser.connect(biquad_filter);
+        audio_source.connect(gain_filter);
+        gain_filter.connect(biquad_filter);
+        biquad_filter.connect(actx.destination);
         
         biquad_filter.frequency.setValueAtTime(0, actx.currentTime);
-        gain_filter.gain.setValueAtTime(0, actx.currentTime);
+        biquad_filter.Q.value = 0;
         
         console.log(audio_source);
     }
@@ -42,19 +67,19 @@ document.addEventListener("DOMContentLoaded", function(_) {
         const is_bassboost = document.getElementById("bboost").checked;
         if (is_bassboost)
         {
-            biquad_filter.frequency.setValueAtTime(100, actx.currentTime);
-            gain_filter.gain.setValueAtTime(1, actx.currentTime);
+            biquad_filter.frequency.setValueAtTime(150, actx.currentTime);
+            //gain_filter.gain.setValueAtTime(1, actx.currentTime);
             biquad_filter.Q.value = 5;
         }
         else {
             biquad_filter.frequency.setValueAtTime(0, actx.currentTime);
-            gain_filter.gain.setValueAtTime(0, actx.currentTime);
+            //gain_filter.gain.setValueAtTime(1.5, actx.currentTime);
             biquad_filter.Q.value = 0;
         }
     }
 
     function draw_bars() {
-        const bars_amount = parseInt(screen_width / 8);
+        const bars_amount = parseInt(screen_width / 8); // 8 - px width of one bar, including margins
 
         const freq_bin_count = analyser.frequencyBinCount;
         const factor = parseInt(freq_bin_count / bars_amount);
@@ -124,6 +149,7 @@ document.addEventListener("DOMContentLoaded", function(_) {
             connect_nodes();
 
             setInterval(draw_bars, 15);
+            setInterval(ear_protector, 100);
             first_run = false;
         }
     })
